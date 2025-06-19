@@ -2,6 +2,7 @@
 
 #include <string>
 #include <Windows.h>
+#include <TlHelp32.h>
 
 namespace process
 {

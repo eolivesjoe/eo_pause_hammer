@@ -9,7 +9,16 @@ namespace process {
 
 	void ThreadManager::togglePause()
 	{
-
+		if (m_isPaused == true)
+		{
+			resumeAllThreads();
+			m_isPaused = false;
+		}
+		else
+		{
+			suspendAllThreads();
+			m_isPaused = true;
+		}
 	}
 
 	void ThreadManager::suspendAllThreads()
