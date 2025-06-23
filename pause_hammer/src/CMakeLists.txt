@@ -4,4 +4,4 @@ add_executable(pause_hammer
     process/thread_manager.cpp
     hotkeys/hotkey_handler.cpp
     logger/logger.cpp
-)
+ )

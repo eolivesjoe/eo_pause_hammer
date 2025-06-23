@@ -2,8 +2,8 @@
 
 class ThreadManager;
 
-namespace hotkeys {
-
+namespace hotkeys 
+{
 	class Handler
 	{
 	public:
