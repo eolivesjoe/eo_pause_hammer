@@ -25,22 +25,22 @@ namespace process
 
 	void ThreadManager::suspendAllThreads()
 	{
-		m_suspendedThreads.clear();
+		//m_suspendedThreads.clear();
 
-		forEachThreadInProcess([this](HANDLE hThread, DWORD threadId)
-			{
-				DWORD tid = GetThreadId(hThread);
-				SuspendThread(hThread);
+		//forEachThreadInProcess([this](HANDLE hThread, DWORD threadId)
+		//	{
+		//		DWORD tid = GetThreadId(hThread);
+		//		SuspendThread(hThread);
 
-				if (SuspendThread(hThread) != (DWORD) - 1)
-				{
-					m_suspendedThreads[tid]++;
-				}
-				else
-				{
-					logger::error("Suspend thread: " + tid);
-				}
-			});
+		//		if (SuspendThread(hThread) != (DWORD) - 1)
+		//		{
+		//			m_suspendedThreads[tid]++;
+		//		}
+		//		else
+		//		{
+		//			logger::error("Suspend thread: " + tid);
+		//		}
+		//	});
 	}
 
 	void ThreadManager::resumeAllThreads()
