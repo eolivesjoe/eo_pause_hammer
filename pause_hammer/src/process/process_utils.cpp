@@ -1,4 +1,5 @@
 #include "process_utils.h"
+#include "../logger/logger.h"
 
 namespace process
 {
@@ -26,6 +27,7 @@ namespace process
 			} while (Process32Next(snapshot, &entry) == TRUE);
 		}
 
+		logger::error(processName);
 		CloseHandle(snapshot);
 		return 0;
 	}

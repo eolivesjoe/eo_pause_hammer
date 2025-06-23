@@ -13,7 +13,6 @@ namespace process
 	public:
 		ThreadManager(DWORD pid);
 
-		// Toggles between suspending and resuming all threads
 		void togglePause();
 
 	private:
@@ -23,10 +22,8 @@ namespace process
 
 		void suspendAllThreads();
 
-		// Resumes all threads in the process
 		void resumeAllThreads();
 
-		// Applies a function to all threads in the process
-		void forEachThreadInProcess(const std::function<void(HANDLE)>& action);
+		void forEachThreadInProcess(const std::function<void(HANDLE, DWORD)>& action);
 	};
 } // namespace process

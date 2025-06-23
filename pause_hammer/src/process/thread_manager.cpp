@@ -27,7 +27,7 @@ namespace process
 	{
 		m_suspendedThreads.clear();
 
-		forEachThreadInProcess([this](HANDLE hThread)
+		forEachThreadInProcess([this](HANDLE hThread, DWORD threadId)
 			{
 				DWORD tid = GetThreadId(hThread);
 				SuspendThread(hThread);
@@ -43,16 +43,17 @@ namespace process
 			});
 	}
 
-	// Resumes all threads in the process
 	void ThreadManager::resumeAllThreads()
 	{
-		forEachThreadInProcess([](HANDLE hThread)
+		forEachThreadInProcess([](HANDLE hThread, DWORD threadId)
 			{
-				ResumeThread(hThread);
+				logger::info(threadId);
+
+				//ResumeThread(hThread);
 			});
 	}
 
-	void ThreadManager::forEachThreadInProcess(const std::function<void(HANDLE)>& action)
+	void ThreadManager::forEachThreadInProcess(const std::function<void(HANDLE, DWORD)>& action)
 	{
 		HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0);
 		if (snapshot == INVALID_HANDLE_VALUE)
@@ -72,7 +73,7 @@ namespace process
 					HANDLE hThread = OpenThread(THREAD_SUSPEND_RESUME, FALSE, entry.th32ThreadID);
 					if (hThread)
 					{
-						action(hThread);
+						action(hThread, entry.th32ThreadID);
 						CloseHandle(hThread);
 					}
 				}

@@ -1,4 +1,5 @@
 #include <iostream>
+
 #include "process/process_utils.h"
 #include "process/thread_manager.h"
 #include "hotkeys/hotkey_handler.h"
@@ -6,9 +7,19 @@
 
 int main() 
 {
-    std::cout << "Hello\n";
     logger::init();
-    logger::info("HELLO 1");
-    logger::error("NOT HELLO");
+
+    auto pid = process::findProcessIdByName(L"Firefox.exe");
+
+    logger::info("pid");
+    logger::info(pid);
+
+    logger::info("threads");
+
+
+    process::ThreadManager tm(pid);
+    tm.togglePause();
+    tm.togglePause();
+
     return 0;
 }
