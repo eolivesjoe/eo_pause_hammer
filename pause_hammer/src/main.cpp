@@ -9,7 +9,7 @@ int main()
 {
     logger::init();
 
-    auto pid = process::findProcessIdByName(L"Firefox.exe");
+    auto pid = process::findProcessIdByName(L"Discord.exe");
 
     logger::info("pid");
     logger::info(pid);

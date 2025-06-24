@@ -25,32 +25,49 @@ namespace process
 
 	void ThreadManager::suspendAllThreads()
 	{
-		//m_suspendedThreads.clear();
+		m_suspendedThreads.clear();
+		logger::info("SUSPENDING");
+		forEachThreadInProcess([this](HANDLE hThread, DWORD threadId)
+			{
+				auto threadSuspendCount = SuspendThread(hThread);
+				logger::info(threadId);
 
-		//forEachThreadInProcess([this](HANDLE hThread, DWORD threadId)
-		//	{
-		//		DWORD tid = GetThreadId(hThread);
-		//		SuspendThread(hThread);
-
-		//		if (SuspendThread(hThread) != (DWORD) - 1)
-		//		{
-		//			m_suspendedThreads[tid]++;
-		//		}
-		//		else
-		//		{
-		//			logger::error("Suspend thread: " + tid);
-		//		}
-		//	});
+				if (threadSuspendCount != (DWORD)-1)
+				{
+					++m_suspendedThreads[threadId];
+				}
+				else
+				{
+					logger::error(threadId);
+				}
+			});
 	}
 
 	void ThreadManager::resumeAllThreads()
 	{
-		forEachThreadInProcess([](HANDLE hThread, DWORD threadId)
+		logger::info("RESUMING");
+		for (const auto& [threadId, count] : m_suspendedThreads)
+		{
+			HANDLE hThread = OpenThread(THREAD_SUSPEND_RESUME, FALSE, threadId);
+			if (hThread != nullptr)
 			{
-				logger::info(threadId);
-
-				//ResumeThread(hThread);
-			});
+				for (int i = 0; i != count; ++i)
+				{
+					auto threadSuspendCount = ResumeThread(hThread);
+					logger::info(threadId);
+					if (threadSuspendCount == (DWORD)-1)
+					{
+						logger::error(threadId);
+					}
+				}
+				CloseHandle(hThread);
+			}
+			else
+			{
+				logger::error("OpenThread Failed");
+				logger::error(threadId);
+			}
+		}
 	}
 
 	void ThreadManager::forEachThreadInProcess(const std::function<void(HANDLE, DWORD)>& action)
