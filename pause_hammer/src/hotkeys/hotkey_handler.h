@@ -1,17 +1,17 @@
 #pragma once
 
-class ThreadManager;
+#include "../process/thread_manager.h"
 
 namespace hotkeys 
 {
 	class Handler
 	{
 	public:
-		Handler(ThreadManager& manager);
+		Handler(process::ThreadManager& manager);
 
 		void listener();
 
 	private:
-		ThreadManager& m_manager;
+		process::ThreadManager& m_manager;
 	};
 } // namespace hotkeys

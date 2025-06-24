@@ -23,7 +23,5 @@ namespace process
 		void suspendAllThreads();
 
 		void resumeAllThreads();
-
-		void forEachThreadInProcess(const std::function<void(HANDLE, DWORD)>& action);
 	};
 } // namespace process
