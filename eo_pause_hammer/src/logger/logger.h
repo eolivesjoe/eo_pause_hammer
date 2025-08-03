@@ -4,13 +4,13 @@
 
 namespace logger 
 {
-    void init();
+    void Init();
 
-    void info(const std::string& msg);
-    void info(const std::wstring& msg);
-    void info(const DWORD msg);
+    void Info(const std::string& msg);
+    void Info(const std::wstring& msg);
+    void Info(const DWORD msg);
 
-    void error(const std::string& msg);
-    void error(const std::wstring& msg);
-    void error(const DWORD msg);
+    void Error(const std::string& msg);
+    void Error(const std::wstring& msg);
+    void Error(const DWORD msg);
 } // namespace logger

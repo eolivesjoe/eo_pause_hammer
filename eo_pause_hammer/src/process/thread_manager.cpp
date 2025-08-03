@@ -9,23 +9,23 @@ namespace process
 		this->m_isPaused = false;
 	}
 
-	void ThreadManager::togglePause()
+	void ThreadManager::TogglePause()
 	{
 		if (m_isPaused == true)
 		{
-			resumeAllThreads();
+			ResumeAllThreads();
 			m_isPaused = false;
 		}
 		else
 		{
-			suspendAllThreads();
+			SuspendAllThreads();
 			m_isPaused = true;
 		}
 	}
 
-	void ThreadManager::suspendAllThreads()
+	void ThreadManager::SuspendAllThreads()
 	{
-		logger::info("pausing...");
+		logger::Info("pausing...");
 		m_suspendedThreads.clear();
 
 		HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0);
@@ -54,7 +54,7 @@ namespace process
 						}
 						else
 						{
-							logger::error(entry.th32ThreadID);
+							logger::Error(entry.th32ThreadID);
 						}
 						CloseHandle(hThread);
 					}
@@ -64,9 +64,9 @@ namespace process
 		CloseHandle(snapshot);
 	}
 
-	void ThreadManager::resumeAllThreads()
+	void ThreadManager::ResumeAllThreads()
 	{
-		logger::info("resuming...");
+		logger::Info("resuming...");
 		for (const auto& [threadId, count] : m_suspendedThreads)
 		{
 			HANDLE hThread = OpenThread(THREAD_SUSPEND_RESUME, FALSE, threadId);
@@ -78,15 +78,15 @@ namespace process
 
 					if (threadSuspendCount == (DWORD)-1)
 					{
-						logger::error(threadId);
+						logger::Error(threadId);
 					}
 				}
 				CloseHandle(hThread);
 			}
 			else
 			{
-				logger::error("OpenThread Failed");
-				logger::error(threadId);
+				logger::Error("OpenThread Failed");
+				logger::Error(threadId);
 			}
 		}
 	}

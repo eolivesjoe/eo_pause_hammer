@@ -11,23 +11,22 @@ namespace hotkeys
 
 	}
 
-	void Handler::listener()
+	void Handler::Listener()
 	{
-		// Register CTRL + P
 		const int HOTKEY_ID_CTRL_P = 1;
-		if (!RegisterHotKey(NULL, HOTKEY_ID_CTRL_P, MOD_CONTROL, 0x50)) // 0x50 = 'P'
+		if (!RegisterHotKey(NULL, HOTKEY_ID_CTRL_P, MOD_CONTROL, 0x50))
 		{
-			logger::error("Failed to register hotkey CTRL+P");
+			logger::Error("Failed to register hotkey CTRL+P");
 			return;
 		}
-		logger::info("Hotkey listener running. Press CTRL+P...");
+		logger::Info("Hotkey listener running. Press CTRL+P...");
 
 		MSG msg = { 0 };
 		while (GetMessage(&msg, NULL, 0, 0))
 		{
 			if (msg.message == WM_HOTKEY && msg.wParam == HOTKEY_ID_CTRL_P)
 			{
-				m_manager.togglePause();
+				m_manager.TogglePause();
 			}
 		}
 

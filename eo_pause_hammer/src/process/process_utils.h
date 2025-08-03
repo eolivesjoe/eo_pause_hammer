@@ -5,5 +5,5 @@
 
 namespace process
 {
-    DWORD findProcessIdByName(const std::wstring& processName);
+    DWORD FindProcessIdByName(const std::wstring& processName);
 } // namespace process6

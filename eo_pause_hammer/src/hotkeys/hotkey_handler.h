@@ -9,7 +9,7 @@ namespace hotkeys
 	public:
 		Handler(process::ThreadManager& manager);
 
-		void listener();
+		void Listener();
 
 	private:
 		process::ThreadManager& m_manager;
